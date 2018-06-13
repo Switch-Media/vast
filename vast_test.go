@@ -637,3 +637,26 @@ func TestUniversalAdID(t *testing.T) {
 		}
 	}
 }
+
+func TestMezzanine(t *testing.T) {
+	v, _, _, err := loadFixture("testdata/vast4_mezzanine.xml")
+	if !assert.NoError(t, err) {
+		return
+	}
+
+	assert.Equal(t, "4.0", v.Version)
+	if assert.Len(t, v.Ads, 1) {
+		ad := v.Ads[0]
+		assert.Equal(t, "20001", ad.ID)
+		if assert.NotNil(t, ad.InLine) {
+			if assert.Len(t, ad.InLine.Creatives, 1) {
+				if assert.NotNil(t, ad.InLine.Creatives[0].Linear) {
+					linear := ad.InLine.Creatives[0].Linear
+					if assert.NotNil(t, linear.Mezzanine) {
+						assert.Equal(t, "http://pilot.iabtechlab.com/beacon?type=complete&imprid=s5-ea2f7f298e28c0c98374491aec3dfeb1&ts=4235", strings.TrimSpace(linear.Mezzanine.URL))
+					}
+				}
+			}
+		}
+	}
+}

@@ -243,6 +243,12 @@ type Linear struct {
 	TrackingEvents []Tracking   `xml:"TrackingEvents>Tracking,omitempty"`
 	VideoClicks    *VideoClicks `xml:",omitempty"`
 	MediaFiles     []MediaFile  `xml:"MediaFiles>MediaFile,omitempty"`
+	Mezzanine      *Mezzanine   `xml:"MediaFiles>Mezzanine,omitempty"`
+}
+
+// Mezzanine is a media file for server-side ad stitching.
+type Mezzanine struct {
+	URL string `xml:",cdata"`
 }
 
 // LinearWrapper defines a wrapped linear creative
